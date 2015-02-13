@@ -11,9 +11,11 @@ Object.prototype.toTableHead = function(){
 		var html = [];
 		html.push("<tr>")
 		var self = this;
-		Object.keys(this).map(function(key){
-			if (typeof self[key] != "function")
-				html.push("<td>" + self[key] + "</td>");
+		
+		Object.keys(this).filter(funtion(key){
+			return self[key] != "function"
+		}).map(function(key){
+			html.push("<td>" + self[key] + "</td>");
 		});
 		html.push("</tr>")
 		return html.join('');
