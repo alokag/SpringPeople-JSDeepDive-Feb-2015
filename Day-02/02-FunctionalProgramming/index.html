@@ -80,7 +80,42 @@
 			products.toTable(parent);
 		});
 		//filter
+		var filter = function(list, criteriaFn){
+			var result = [];
+			for(var i=0;i<list.length;i++)
+				if (criteriaFn(list[i]) == true)
+					result.push(list[i]);
+			return result;
+		}
+		print("list of costly products [cost > 50]", function(parent){
+			var costlyProductCriteria = function(p){
+				return p.cost > 50;
+			}
+			var allCostlyProducts = filter(products, costlyProductCriteria);
+			allCostlyProducts.toTable(parent);
+		});
 
+		print("list of all affordable products [cost <= 50]", function(parent){
+			var affordableProductCriteria = function(p){
+				return p.cost <= 50;
+			}
+			var allAffordableProducts = filter(products, affordableProductCriteria);
+			allAffordableProducts.toTable(parent);
+		});
+
+		var notCriteria = function(criteriaFn){
+			return function(){
+				return !criteriaFn.apply(this, arguments)
+			}
+		}
+		print("list of all affordable products [cost <= 50]", function(parent){
+			var costlyProductCriteria = function(p){
+				return p.cost > 50;
+			}
+			var affordableProductCriteria = notCriteria(costlyProductCriteria);
+			var allAffordableProducts = filter(products, affordableProductCriteria);
+			allAffordableProducts.toTable(parent);
+		});
 		//min
 
 		//max

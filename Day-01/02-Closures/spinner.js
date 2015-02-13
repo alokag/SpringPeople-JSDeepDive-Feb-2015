@@ -27,3 +27,20 @@ spinner.down(); // => 2
 spinner.down(); // => 1
 spinner.down(); // => 0
 
+
+function memoize(fn){
+	var cache = {};
+	return function(){
+		var key = window.JSON.stringify(arguments);
+		if (typeof cache[key] === "undefined")
+			cache[key] = fn.apply(this,arguments);
+		return cache[key];
+	}
+}
+
+function add(x,y){
+	console.log("processing");
+	return x + y;
+}
+
+var cachedAdd = memoize(add);
