@@ -1,20 +1,20 @@
 Object.prototype.toTableHead = function(){
 		var html = [];
 		html.push("<tr>")
-		for(var key in this){
-			if (typeof this[key] != "function")
-				html.push("<th>" + key + "</th>");
-		}
+		Object.keys(this).map(function(key){
+			html.push("<th>" + key + "</th>");
+		});
 		html.push("</tr>");
 		return html.join('');
 	}
 	Object.prototype.toTableRow = function(){
 		var html = [];
 		html.push("<tr>")
-		for(var key in this){
-			if (typeof this[key] != "function")
-				html.push("<td>" + this[key] + "</td>");
-		}
+		var self = this;
+		Object.keys(this).map(function(key){
+			if (typeof self[key] != "function")
+				html.push("<td>" + self[key] + "</td>");
+		});
 		html.push("</tr>")
 		return html.join('');
 	}

@@ -127,7 +127,35 @@
 		//all
 
 		//groupBy
-	
+		var groupBy = function(list, keySelector){
+			var result = {};
+			for(var i=0;i<list.length;i++){
+				var key = keySelector(list[i]);
+				if (typeof result[key] === "undefined")
+					result[key] = [];
+				result[key].push(list[i]);
+			}
+			return result;
+		}
+		var categoryKeySelector = function(p){ return p.category};
+		window.productsByCategory = groupBy(products, categoryKeySelector);
+		for(var key in productsByCategory){
+			if (Array.isArray(productsByCategory[key]))
+				print("products - category - " + key, function(parent){
+					productsByCategory[key].toTable(parent);
+				});
+		}
+
+		var keySelectorByCost = function(p){
+			return p.cost < 50 ? "affordable" : "costly";
+		}
+		var productsByCost = groupBy(products, keySelectorByCost);
+		for(var key in productsByCost){
+			if (Array.isArray(productsByCost[key]))
+				print("products - category - " + key, function(parent){
+					productsByCost[key].toTable(parent);
+				});
+		}
 	}
 	</script>
 </head>
